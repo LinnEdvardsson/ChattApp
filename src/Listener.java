@@ -22,14 +22,21 @@ public class Listener implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try{
-            chatArea.append(message+"\n");
-        DatagramSocket socket = new DatagramSocket(1234, myOwnAddress);
-        byte[] bytes = new byte[1024];
-        DatagramPacket packet = new DatagramPacket(bytes, bytes.length);
 
+        try {
+            DatagramSocket socket = new DatagramSocket();
+            socket = new DatagramSocket(1234, myOwnAddress);
+            byte[] buffer = new byte[1024];
+            while (true) {
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                socket.receive(packet);
+                String message = new String(packet.getData(), 0, packet.getLength());
+                System.out.println("Received message: " + message);
+            }
+        } catch (SocketException e1) {
+            throw new RuntimeException(e1);
         } catch (IOException e1) {
-            e1.printStackTrace();
+            throw new RuntimeException(e1);
         }
 
     }
