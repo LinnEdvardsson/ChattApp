@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class ChattUI extends JFrame {
+public class ChattUI extends JFrame implements ActionListener {
 
     JTextArea chatArea;
     JScrollPane chatScroll;
@@ -14,6 +16,8 @@ public class ChattUI extends JFrame {
         super("Chat App");
         this.setLayout(new BorderLayout());
 
+        InetAddress myAddress = InetAddress.getLocalHost();
+
         chatArea = new JTextArea();
         chatArea.setEditable(false);
         chatArea.setLineWrap(true);
@@ -23,9 +27,7 @@ public class ChattUI extends JFrame {
         connectButton = new JButton("Connect");
         messageField = new JTextField();
         messageField.addActionListener(new Sender("25.16.67.47", 1234, messageField, chatArea));
-
-
-        connectButton.addActionListener(new Listener("25.16.11.103", 1234, messageField, chatArea));
+        connectButton.addActionListener(this);
 
         this.add(connectButton, BorderLayout.NORTH);
         this.add(chatScroll, BorderLayout.CENTER);
@@ -35,5 +37,17 @@ public class ChattUI extends JFrame {
         this.setSize(300, 400);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Listener listener = null;
+        try {
+            listener = new Listener("25.16.11.103", 1234, chatArea);
+            Thread listenerThread = new Thread(listener);
+            listenerThread.start();
+        } catch (UnknownHostException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

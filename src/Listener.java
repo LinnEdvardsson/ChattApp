@@ -1,36 +1,31 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.*;
-import java.util.List;
 
-public class Listener implements ActionListener{
+public class Listener implements Runnable {
 
     InetAddress myOwnAddress;
     int port;
     DatagramSocket socket;
-    String message;
     JTextArea chatArea;
 
-    public Listener(String myOwnAddress, int port, JTextField textField, JTextArea chatArea) throws UnknownHostException {
+    public Listener(String myOwnAddress, int port, JTextArea chatArea) throws UnknownHostException {
         this.myOwnAddress = InetAddress.getByName(myOwnAddress);
         this.port = port;
-        this.message = textField.getText();
         this.chatArea = chatArea;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void run() {
 
         try {
-            socket = new DatagramSocket(1234, myOwnAddress);
+            socket = new DatagramSocket(1234, InetAddress.getLocalHost());
             byte[] buffer = new byte[1024];
             while (true) {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
                 String message = new String(packet.getData(), 0, packet.getLength());
-                System.out.println("Received message: " + message);
+                chatArea.append(message + "\n");
             }
         } catch (SocketException e1) {
             throw new RuntimeException(e1);
