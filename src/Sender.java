@@ -8,14 +8,14 @@ import java.net.UnknownHostException;
 
 public class Sender implements ActionListener {
 
-    InetAddress myOwnAddress;
+    InetAddress myFriendsAddress;
     int port;
     DatagramSocket socket;
     String message;
     JTextArea chatArea;
 
-    public Sender(String myOwnAddress, int port, JTextField textField, JTextArea chatArea) throws UnknownHostException {
-        this.myOwnAddress = InetAddress.getByName(myOwnAddress);
+    public Sender(String myFriendsAddress, int port, JTextField textField, JTextArea chatArea) throws UnknownHostException {
+        this.myFriendsAddress = InetAddress.getByName(myFriendsAddress);
         this.port = port;
         this.message = textField.getText();
         this.chatArea = chatArea;
@@ -27,7 +27,7 @@ public class Sender implements ActionListener {
             chatArea.append(message);
             socket = new DatagramSocket();
             byte[] messageInBytes = message.getBytes();
-            DatagramPacket packet = new DatagramPacket(messageInBytes, messageInBytes.length, myOwnAddress, port);
+            DatagramPacket packet = new DatagramPacket(messageInBytes, messageInBytes.length, myFriendsAddress, port);
             socket.send(packet);
         }
         catch (Exception ex) {
