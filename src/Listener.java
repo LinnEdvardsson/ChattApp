@@ -13,8 +13,8 @@ public class Listener implements ActionListener{
     String message;
     JTextArea chatArea;
 
-    public Listener(String MyOwnAddress, int port, JTextField textField, JTextArea chatArea) {
-        this.myOwnAddress = InetAddress.getLoopbackAddress();
+    public Listener(String myOwnAddress, int port, JTextField textField, JTextArea chatArea) throws UnknownHostException {
+        this.myOwnAddress = InetAddress.getByName(myOwnAddress);
         this.port = port;
         this.message = textField.getText();
         this.chatArea = chatArea;
