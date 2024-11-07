@@ -24,7 +24,6 @@ public class Listener implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
         try {
-            DatagramSocket socket = new DatagramSocket();
             socket = new DatagramSocket(1234, myOwnAddress);
             byte[] buffer = new byte[1024];
             while (true) {
