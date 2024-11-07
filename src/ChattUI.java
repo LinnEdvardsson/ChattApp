@@ -24,6 +24,9 @@ public class ChattUI extends JFrame {
         messageField = new JTextField();
         messageField.addActionListener(new Sender("25.16.67.47", 1234, messageField, chatArea));
 
+
+        connectButton.addActionListener(new Listener("25.16.11.103", 1234, messageField, chatArea));
+
         this.add(connectButton, BorderLayout.NORTH);
         this.add(chatScroll, BorderLayout.CENTER);
         this.add(messageField, BorderLayout.SOUTH);
