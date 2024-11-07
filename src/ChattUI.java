@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.net.UnknownHostException;
 
 public class ChattUI extends JFrame {
 
@@ -8,7 +10,7 @@ public class ChattUI extends JFrame {
     JButton connectButton;
     JTextField messageField;
 
-    public ChattUI() {
+    public ChattUI() throws UnknownHostException {
         super("Chat App");
         this.setLayout(new BorderLayout());
 
@@ -20,6 +22,9 @@ public class ChattUI extends JFrame {
 
         connectButton = new JButton("Connect");
         messageField = new JTextField();
+
+
+        connectButton.addActionListener(new Listener("25.16.11.103", 1234, messageField, chatArea));
 
         this.add(connectButton, BorderLayout.NORTH);
         this.add(chatScroll, BorderLayout.CENTER);
