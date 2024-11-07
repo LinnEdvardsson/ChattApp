@@ -24,11 +24,11 @@ public class Sender implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
+            chatArea.append(message);
             socket = new DatagramSocket();
             byte[] messageInBytes = message.getBytes();
             DatagramPacket packet = new DatagramPacket(messageInBytes, messageInBytes.length, myOwnAddress, port);
             socket.send(packet);
-            chatArea.append(message);
         }
         catch (Exception ex) {
             ex.printStackTrace();
