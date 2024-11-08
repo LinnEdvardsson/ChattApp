@@ -28,7 +28,7 @@ public class Sender implements ActionListener {
             chatArea.append("You: " + message + "\n");
             socket = new DatagramSocket();
             byte[] messageInBytes = message.getBytes();
-            DatagramPacket packet = new DatagramPacket(messageInBytes, messageInBytes.length, InetAddress.getLocalHost(), port);
+            DatagramPacket packet = new DatagramPacket(messageInBytes, messageInBytes.length, myFriendsAddress, port);
             socket.send(packet);
             textField.setText("");
         }

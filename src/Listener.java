@@ -19,13 +19,13 @@ public class Listener implements Runnable {
     public void run() {
 
         try {
-            socket = new DatagramSocket(1234, InetAddress.getLocalHost());
+            socket = new DatagramSocket(1234, myOwnAddress);
             byte[] buffer = new byte[1024];
             while (true) {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
                 String message = new String(packet.getData(), 0, packet.getLength());
-                chatArea.append(message + "\n");
+                chatArea.append("Friend: " + message + "\n");
             }
         } catch (SocketException e1) {
             throw new RuntimeException(e1);
